@@ -36,14 +36,29 @@ func main()  {
 	e1 :=Employee{1,"Desarrollador",p1}
 
 	fmt.Printf(e1.PrintEmployee())
-	fmt.Println("")
+	fmt.Println()
 
-	// Llamando etiquetas 
+	//----------Llamando etiquetas----------
+	// Convierto objetos de una estructura en json
 	employee, err := json.Marshal(e1)
 	if err!=nil{
 		log.Fatal(err)
 	}
+	fmt.Println()
+	fmt.Println("Imprimiendo el objeto convertido a json")
 	fmt.Println(string(employee))
+	fmt.Println()
+
+	//Convertir un json en un objeto
+	var e2 Employee
+	employee2 := "{\"id\":2,\"position\":\"Desarrollador\",\"person\":{\"dni\":1156565,\"name\":\"Sandra\",\"date_of_birth\":\"10/10/1993\"}}"
+
+	if err2 := json.Unmarshal([]byte(employee2), &e2); err2!= nil{
+		log.Fatal(err2)
+	}
+	fmt.Println("Imprimiendo el json convertido en objeto " )
+	fmt.Println(e2.PrintEmployee())
+
 }
 func (e Employee)PrintEmployee()string{
 	//Sprinttf parsea a string 
