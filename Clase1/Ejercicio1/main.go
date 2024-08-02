@@ -10,17 +10,19 @@ func main() {
 	ObtenerEstacionSwitch(meses)
 
 	//------------------EJERCICIO 1 PROFE-----------------//
-	// letras de una palabra
-	fmt.Println("------CON EL PROFE --------")
+	// Ejercicio 1: cuenta las letras de una palabra
+	fmt.Println("------CON EL PROFE --------")// La consola va imprimir este mensaje
+	//Las dos maneras de declarar una variable en Go
 	var palabra string = "palabraOpcion1"
 	//palabra2 := "palabraOpcion2"
 
-	cant := len(palabra)
+	cant := len(palabra)// El metodo "len" va a contar la cantidad de posiciones en mi variable
 	fmt.Println( "la palabra", palabra, "tiene ", cant, "letras")
 
 	for i := 0; i < cant; i++ {
 		fmt.Println(string(palabra[i])) // casteo 
 	}
+	
 	//------------------EJERCICIO 2 PROFE -------------------//
 	// A qué mes corresponde
 
@@ -56,9 +58,9 @@ estudiantes = append(estudiantes, "Gabriela")
 fmt.Println(estudiantes)
 
 //Ejercicio 2 - Qué edad tiene...
-//Un empleado de una empresa quiere saber el nombre y edad de uno de sus empleados. 
+//Un empleador de una empresa quiere saber el nombre y edad de uno de sus empleados. 
 //Según el siguiente map, debemos imprimir la edad de Benjamin.
-var employees = map[string]int{"Benjamin": 20, "Nahuel": 26, "Brenda": 19, "Darío": 44, "Pedro": 30}
+employees := map[string]int{"Benjamin": 20, "Nahuel": 26, "Brenda": 19, "Darío": 44, "Pedro": 30}
 //Por otro lado, también es necesario:
 //Saber cuántos de sus empleados son mayores de 21 años.
 //Agregar un empleado nuevo a la lista, llamado Federico que tiene 25 años.
@@ -103,7 +105,7 @@ func ObtenerEstacion(meses []string)  {
 	}
 }
 //Usando swtich
-func ObtenerEstacionSwitch (meses []string){
+func ObtenerEstacionSwitch(meses []string){
 for _, mes := range meses{
 	switch mes {
 	case  "Enero", "Febrero",  "Marzo":
