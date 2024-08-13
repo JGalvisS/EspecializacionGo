@@ -30,7 +30,7 @@ func crearProdCompradosFile(){
 		}
 
 		//Crea los titulos de las columnas
-		_, err2 := f.WriteString("ID,Precio,Cantidad\n")
+		_, err2 := f.WriteString("ID,Precio,Cantidad;\n")
 		if err2 != nil{
 			log.Fatal(err2)
 		} 
@@ -48,7 +48,7 @@ func addProdComprado(id int, precio float64, cantidad int){
 		log.Fatal(err)
 	}
 	//Agrego el producto y uso Sprinttf para que sea un string
-	_, err = f.WriteString(fmt.Sprintf("%d,%.2f,%d\n", id, precio, cantidad))
+	_, err = f.WriteString(fmt.Sprintf("%d,%.2f,%d;\n", id, precio, cantidad))
 	if err != nil {
 		log.Fatal(err)
 	}
