@@ -62,7 +62,7 @@ func readFile(routeName string){
 	_,err := os.Open(routeName)
 	if err != nil {
 		//panic: detiene todo abruptamente y comienza a desempaquetar la pila de llamadas (es decir, ejecuta las funciones diferidas). 
-		//Si no se captura el pánico con recover, el programa terminará abruptamente.
+		//Sino se captura el pánico con recover, el programa terminará abruptamente.
 		panic("El archivo indicado no fue encontrado o está dañado")
 	}
 }

@@ -64,7 +64,7 @@ func SumarMantenimientos(mantenimientos...Mantenimiento) float64 {
 	return precioTotal
 }
 func main()  {
- productos := []Prducto{
+productos := []Prducto{
 	{"trapeador",12.00,6},
 	{"jabon", 8.50,9},
 	{"suavisante",10.00,10},
