@@ -80,5 +80,22 @@ switch time {
 	return amountPax,nil
 }
 
-// ejemplo 3
-//func AverageDestination(destination string, total int) (int, error) {}
+//funcion que recibe un destino string y calcula el porcentaje de personas que viajan a ese destino.
+/*NOTA: Como el reporte dice que se genera cada 24 horas no le veo sentido al parametro total int*/
+func AverageDestination(destination string) (float64, error) {
+	var Paxpercent float64
+	res, err := os.ReadFile("./tickets.csv")
+	if err != nil{
+		Paxpercent = 0
+		return Paxpercent, errors.New("La base de datos no pudo ser leída")
+	}
+	data := strings.Split(string(res),"\n")
+	amountPaxPerDay := len(data)
+	amountPaxPerDestination,errTT := GetTotalTickets(destination)
+	if errTT != nil{
+		Paxpercent = 0
+		return Paxpercent, errors.New("No se logro obtener la cantidad de pasajeros que viajaron")
+	}
+	Paxpercent = float64(float64(amountPaxPerDestination) / float64(amountPaxPerDay) * 100)
+	return Paxpercent,nil
+}
