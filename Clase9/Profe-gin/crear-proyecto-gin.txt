@@ -1,0 +1,9 @@
+1. Me ubico en la carpena en la que voy a crear la carpeta e inicializo el proyecto con el siguiente comando:
+go mod init nombre-del-proyecto
+NOTA: como nombre de proyecto tambien me puede recibir la ruta de un repo que ya tenga github
+
+2. Descargo los paquetes almacenados en el repositorio oficial de gin con el siguiente comando:
+go get -u github.com/gin-gonic/gin
+
+NOTA: El siguiente comando puede limpiar el proyecto de dependencias que no se esten utilizando, ideal para cuando acabes el proyecto
+go mod tidy
