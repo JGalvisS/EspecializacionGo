@@ -164,3 +164,22 @@ func (h *productHandler) Put() gin.HandlerFunc {
 		ctx.JSON(201, product)
 	}
 }
+
+//Delete elimna un producto por id
+func (h *productHandler)Delete()gin.HandlerFunc{
+	return func(ctx *gin.Context) {
+		idContext :=ctx.Param("id")
+		id, err := strconv.Atoi(idContext)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error":"invalid product id"})
+			return
+		}
+
+		err = h.s.Delete(id)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		ctx.JSON(201, gin.H{"msg": "product was deleted succesful"})
+	}
+}

@@ -12,6 +12,7 @@ type Repository interface {
 	SearchPriceGt(price float64) []domain.Product
 	Create(p domain.Product) (domain.Product, error)
 	Update(id int, p domain.Product) error
+	Delete(id int)error
 }
 
 type repository struct {
@@ -89,4 +90,25 @@ func (r *repository) validateCodeValue(codeValue string) bool {
 		}
 	}
 	return true
+}
+
+//Delete elimna un producto por id
+func (r *repository)Delete(id int)error {
+	_,valida:= r.GetByID(id)
+	if valida != nil {
+		return valida
+	}
+	
+	for key, produto := range r.list{
+		if produto.Id == id {
+			r.list = append(r.list[:key], r.list[key+1:]...)
+		}
+	}
+	
+	_, err:=r.GetByID(id)
+	if err != nil {
+		return nil
+	}
+	return err
+
 }

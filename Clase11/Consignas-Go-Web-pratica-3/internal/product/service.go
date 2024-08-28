@@ -12,6 +12,7 @@ type Service interface {
 	SearchPriceGt(price float64) ([]domain.Product, error)
 	Create(p domain.Product) (domain.Product, error)
 	Update(id int, p domain.Product) error
+	Delete(id int)error
 }
 
 type service struct {
@@ -59,4 +60,9 @@ func (s *service) Create(p domain.Product) (domain.Product, error) {
 // Update actualiza un producto existente por id
 func (s *service) Update(id int, p domain.Product)  error {
 	return s.r.Update(id, p)
+}
+
+//Delete elimna un producto por id
+func (s *service)Delete(id int)error  {
+	return s.r.Delete(id)
 }
