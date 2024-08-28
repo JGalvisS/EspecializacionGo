@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 
 	"github.com/bootcamp-go/Consignas-Go-Web.git/cmd/server/handler"
@@ -12,7 +13,7 @@ import (
 
 func main() {
 	var productsList = []domain.Product{}
-	loadProducts("products.json", &productsList)
+	loadProducts("../../products.json", &productsList)
 
 	repo := product.NewRepository(productsList)
 	service := product.NewService(repo)
@@ -27,12 +28,18 @@ func main() {
 		products.GET(":id", productHandler.GetByID())
 		products.GET("/search", productHandler.Search())
 		products.POST("", productHandler.Post())
+		products.PUT(":id",productHandler.Put())
 	}
 	r.Run(":8080")
 }
 
 // loadProducts carga los productos desde un archivo json
 func loadProducts(path string, list *[]domain.Product) {
+	defer func() {
+		if err := recover(); err != nil{
+			log.Fatal(err)
+		}
+	}()
 	file, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)

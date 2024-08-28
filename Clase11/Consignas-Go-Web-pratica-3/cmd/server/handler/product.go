@@ -129,3 +129,38 @@ func (h *productHandler) Post() gin.HandlerFunc {
 		ctx.JSON(201, p)
 	}
 }
+
+// Put actualiza un producto existente por id
+func (h *productHandler) Put() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		idContext :=ctx.Param("id")
+		id, err := strconv.Atoi(idContext)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error":"invalid product id"})
+			return
+		}
+
+		var product domain.Product
+		err = ctx.ShouldBindJSON(&product)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error": "invalid product"})
+			return
+		}
+		valid, err := validateEmptys(&product)
+		if !valid {
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		valid, err = validateExpiration(&product)
+		if !valid {
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		err = h.s.Update(id, product)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		ctx.JSON(201, product)
+	}
+}
