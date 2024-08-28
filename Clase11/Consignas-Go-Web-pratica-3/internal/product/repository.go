@@ -11,6 +11,7 @@ type Repository interface {
 	GetByID(id int) (domain.Product, error)
 	SearchPriceGt(price float64) []domain.Product
 	Create(p domain.Product) (domain.Product, error)
+	Update(id int, p domain.Product) error
 }
 
 type repository struct {
@@ -57,6 +58,27 @@ func (r *repository) Create(p domain.Product) (domain.Product, error) {
 	p.Id = len(r.list) + 1
 	r.list = append(r.list, p)
 	return p, nil
+}
+
+// Update actualiza un producto existente por id
+func (r *repository) Update(id int, p domain.Product)  error {
+	if !r.validateCodeValue(p.CodeValue) {
+		return errors.New("code value already exists")
+	}
+
+	update := false
+	for key, producto := range r.list{
+		if producto.Id == id {
+			p.Id = id
+			r.list[key] =p
+			update = true
+		}
+	}
+
+	if update == false {
+		return errors.New("product not found")
+	}
+	return nil
 }
 
 // validateCodeValue valida que el codigo no exista en la lista de productos

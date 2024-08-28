@@ -11,6 +11,7 @@ type Service interface {
 	GetByID(id int) (domain.Product, error)
 	SearchPriceGt(price float64) ([]domain.Product, error)
 	Create(p domain.Product) (domain.Product, error)
+	Update(id int, p domain.Product) error
 }
 
 type service struct {
@@ -53,4 +54,9 @@ func (s *service) Create(p domain.Product) (domain.Product, error) {
 		return domain.Product{}, err
 	}
 	return p, nil
+}
+
+// Update actualiza un producto existente por id
+func (s *service) Update(id int, p domain.Product)  error {
+	return s.r.Update(id, p)
 }
