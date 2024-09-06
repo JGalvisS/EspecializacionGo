@@ -1,23 +1,15 @@
 package main
 
 import (
-	"os"
 
 	"github.com/bootcamp-go/Consignas-Go-Web.git/cmd/server/handler"
-	"github.com/bootcamp-go/Consignas-Go-Web.git/docs"
 	"github.com/bootcamp-go/Consignas-Go-Web.git/internal/product"
 	"github.com/bootcamp-go/Consignas-Go-Web.git/pkg/middleware"
 	"github.com/bootcamp-go/Consignas-Go-Web.git/pkg/store"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-//@tittle CTD
-//version 1.0
-//@description This API Handler Products
-//@contact.name API Supoort
 func main() {
 
 	if err := godotenv.Load(".env"); err != nil {
@@ -34,10 +26,6 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Recovery())// por si sucerde algun panic no corte la ejecucion 
 	r.Use(middleware.Logger())
-
-	docs.SwaggerInfo.Host = os.Getenv("HOST")
-	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 
 	r.GET("/ping", func(c *gin.Context) { c.String(200, "pong") })
 	products := r.Group("/products")
