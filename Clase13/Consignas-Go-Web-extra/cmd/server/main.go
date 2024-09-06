@@ -11,17 +11,21 @@ import (
 
 func main() {
 
-	if err := godotenv.Load("./cmd/server/.env"); err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		panic("Error loading .env file: " + err.Error())
 	}
 
-	storage := store.NewStore("./products.json")
+	storage := store.NewStore("../../products.json")
 
 	repo := product.NewRepository(storage)
 	service := product.NewService(repo)
 	productHandler := handler.NewProductHandler(service)
 
-	r := gin.Default()
+	//r := gin.Default()
+	r := gin.New()
+	r.Use(gin.Recovery())// por si sucerde algun panic no corte la ejecucion 
+	r.Use(middleware.Logger())
+
 
 	r.GET("/ping", func(c *gin.Context) { c.String(200, "pong") })
 	products := r.Group("/products")
@@ -30,6 +34,7 @@ func main() {
 		products.GET(":id", productHandler.GetByID())
 		products.GET("/search", productHandler.Search())
 		products.GET("/consumer_price", productHandler.ConsumerPrice())
+		// va a midelware a verificar si el token que se envia por handler correcto 
 		products.POST("", middleware.Authentication(), productHandler.Post())
 		products.DELETE(":id", middleware.Authentication(), productHandler.Delete())
 		products.PATCH(":id", middleware.Authentication(), productHandler.Patch())
